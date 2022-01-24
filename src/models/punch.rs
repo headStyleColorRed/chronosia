@@ -20,7 +20,7 @@ pub struct CreatePunchClockInInput {
 // The GraphQL input object for clock out
 #[derive(GraphQLInputObject)]
 pub struct CreatePunchClockOutInput {
-    pub punch_id: i32,
+    pub user_id: i32
 }
 
 // The GraphQL input object for inserting a punch

@@ -3,7 +3,7 @@ use crate::models::user::User;
 use crate::schema::users;
 use crate::schema::users::dsl::*;
 use crate::utils::graphql_translate;
-use diesel::{pg::PgConnection, Insertable, RunQueryDsl};
+use diesel::{pg::PgConnection, Insertable, RunQueryDsl, QueryDsl};
 use juniper::{FieldResult, GraphQLInputObject};
 
 // This struct is basically a query manager. All the methods that it
@@ -18,6 +18,15 @@ impl Users {
         let conn: &PgConnection = &context.pool.get().unwrap();
         // Make query
         let res = users.load::<User>(conn);
+        // Parse ressult
+        graphql_translate(res)
+    }
+
+    pub fn user_with_id(context: &GraphQLContext, input: FindUserQuery) -> FieldResult<User> {
+        // Retrieve connection
+        let conn: &PgConnection = &context.pool.get().unwrap();
+        // Make query
+        let res = users.find(input.id).get_result(conn);
         // Parse ressult
         graphql_translate(res)
     }
@@ -39,6 +48,10 @@ impl Users {
 #[derive(GraphQLInputObject, Insertable)]
 #[table_name = "users"]
 pub struct CreateUserInput {
-    pub name: String,
-    pub status: i32,
+    pub name: String
+}
+
+#[derive(GraphQLInputObject)]
+pub struct FindUserQuery {
+    pub id: i32
 }

@@ -2,7 +2,7 @@ use crate::context::GraphQLContext;
 use crate::models::punch::{Punch, CreatePunchClockInInput, CreatePunchClockOutInput};
 use crate::models::user::User;
 use crate::operations::punches::Punches;
-use crate::operations::users::{CreateUserInput, Users};
+use crate::operations::users::{CreateUserInput, Users, FindUserQuery};
 use juniper::FieldResult;
 use juniper::RootNode;
 
@@ -26,6 +26,10 @@ impl Query {
     pub fn all_users(context: &GraphQLContext) -> FieldResult<Vec<User>> {
         Users::all_users(context)
     }
+
+    pub fn userWithIdcontext(context: &GraphQLContext, input: FindUserQuery) -> FieldResult<User> {
+        Users::user_with_id(context, input)
+    }
 }
 
 // Mutations
@@ -35,17 +39,11 @@ impl Mutation {
         Users::create_user(context, input)
     }
 
-    pub fn clock_in(
-        context: &GraphQLContext,
-        input: CreatePunchClockInInput,
-    ) -> FieldResult<Punch> {
+    pub fn clock_in(context: &GraphQLContext, input: CreatePunchClockInInput) -> FieldResult<Punch> {
         Punches::clock_in(context, input)
     }
 
-    pub fn clock_out(
-        context: &GraphQLContext,
-        input: CreatePunchClockOutInput,
-    ) -> FieldResult<Punch> {
+    pub fn clock_out(context: &GraphQLContext, input: CreatePunchClockOutInput) -> FieldResult<Punch> {
         Punches::clock_out(context, input)
     }
 }

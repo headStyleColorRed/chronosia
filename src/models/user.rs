@@ -22,7 +22,9 @@ impl User {
     fn status(&self) -> i32 {
         self.status
     }
-
+    fn current_punch(&self) -> Option<i32> {
+        self.current_punch
+    }
     pub fn history(context: &GraphQLContext) -> FieldResult<Vec<Punch>> {
         Punches::all_punches_for_user(context, self.id)
     }
