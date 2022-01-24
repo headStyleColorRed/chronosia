@@ -1,7 +1,8 @@
 use super::punch::Punch;
 use crate::{context::GraphQLContext, operations::punches::Punches};
+use crate::schema::users;
 use diesel::Queryable;
-use juniper::FieldResult;
+use juniper::{FieldResult, GraphQLInputObject};
 // The core data type undergirding the GraphQL interface
 #[derive(Queryable)]
 pub struct User {
@@ -28,4 +29,21 @@ impl User {
     pub fn history(context: &GraphQLContext) -> FieldResult<Vec<Punch>> {
         Punches::all_punches_for_user(context, self.id)
     }
+}
+
+// The GraphQL input object for creating TODOs
+#[derive(GraphQLInputObject, Insertable)]
+#[table_name = "users"]
+pub struct CreateUserInput {
+    pub name: String
+}
+
+#[derive(GraphQLInputObject)]
+pub struct FindUserQuery {
+    pub id: i32
+}
+
+#[derive(GraphQLInputObject)]
+pub struct DeleteUserQuery {
+    pub id: i32
 }

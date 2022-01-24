@@ -1,10 +1,8 @@
 use crate::context::GraphQLContext;
 use crate::diesel::ExpressionMethods;
-use crate::models::punch::{
-    CreatePunchClockInInput, CreatePunchClockOutInput, CreatePunchInsert, Punch,
-};
-use crate::models::user::User;
-use crate::operations::users::{Users, FindUserQuery};
+use crate::models::punch::*;
+use crate::models::user::{User, FindUserQuery};
+use crate::operations::users::{Users};
 use crate::schema::punches::dsl::*;
 use crate::utils::{current_time, graphql_translate};
 use diesel::QueryDsl;
@@ -30,6 +28,16 @@ impl Punches {
 
 // Punch mutations
 impl Punches {
+
+    pub fn remove_user_punches(context: &GraphQLContext, input: RemovePunchesQuery) -> FieldResult<Vec<Punch>> {
+        // Retrieve connection
+        let conn: &PgConnection = &context.pool.get().unwrap();
+        // Make query
+        let res = diesel::delete(punches.filter(user_id.eq(input.user_id))).get_results(conn);
+        // Parse ressult
+        graphql_translate(res)
+    }
+
     pub fn clock_in(
         context: &GraphQLContext,
         input: CreatePunchClockInInput,

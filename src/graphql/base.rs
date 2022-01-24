@@ -1,8 +1,8 @@
 use crate::context::GraphQLContext;
-use crate::models::punch::{Punch, CreatePunchClockInInput, CreatePunchClockOutInput};
-use crate::models::user::User;
+use crate::models::punch::*;
+use crate::models::user::*;
 use crate::operations::punches::Punches;
-use crate::operations::users::{CreateUserInput, Users, FindUserQuery};
+use crate::operations::users::Users;
 use juniper::FieldResult;
 use juniper::RootNode;
 
@@ -37,6 +37,10 @@ impl Query {
 impl Mutation {
     pub fn create_user(context: &GraphQLContext, input: CreateUserInput) -> FieldResult<User> {
         Users::create_user(context, input)
+    }
+
+    pub fn delete_user(context: &GraphQLContext, input: DeleteUserQuery) -> FieldResult<User> {
+        Users::delete_user(context, input)
     }
 
     pub fn clock_in(context: &GraphQLContext, input: CreatePunchClockInInput) -> FieldResult<Punch> {
