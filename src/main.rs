@@ -2,8 +2,7 @@
 #[macro_use]
 extern crate diesel;
 
-use actix_web::{web, App, HttpServer, Responder};
-use std::io;
+use actix_web::{web, App, HttpServer};
 mod context;
 mod db;
 mod endpoints;
@@ -12,9 +11,13 @@ mod models;
 mod operations;
 mod schema;
 mod utils;
+mod rest;
+mod tests;
+
+use rest::generic::health;
 
 #[actix_rt::main]
-async fn main() -> io::Result<()> {
+async fn main() -> std::io::Result<()> {
     // Instantiate a new connection pool
     println!("Connecting to database");
     let pool = db::get_pool();
@@ -33,8 +36,4 @@ async fn main() -> io::Result<()> {
     .bind(("127.0.0.1", 8080))?
     .run()
     .await
-}
-
-async fn health() -> impl Responder {
-    "We are alive"
 }
