@@ -27,7 +27,7 @@ impl Query {
         Users::all_users(context)
     }
 
-    pub fn userWithIdcontext(context: &GraphQLContext, input: FindUserQuery) -> FieldResult<User> {
+    pub fn userWithId(context: &GraphQLContext, input: FindUserQuery) -> FieldResult<User> {
         Users::user_with_id(context, input)
     }
 }
