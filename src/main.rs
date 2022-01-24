@@ -2,7 +2,7 @@
 #[macro_use]
 extern crate diesel;
 
-use actix_web::{App, HttpServer};
+use actix_web::{web, App, HttpServer, Responder};
 use std::io;
 mod context;
 mod db;
@@ -27,9 +27,14 @@ async fn main() -> io::Result<()> {
     HttpServer::new(move || {
         App::new()
             .data(pool.clone())
+            .route("/", web::get().to(health))
             .configure(endpoints::graphql_endpoints)
     })
     .bind(("127.0.0.1", 8080))?
     .run()
     .await
+}
+
+async fn health() -> impl Responder {
+    "We are alive"
 }

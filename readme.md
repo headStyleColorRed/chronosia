@@ -1,24 +1,6 @@
 ## Start the Postgres DB
-Let's create a postres container with docker that will save all data on the postgres_data volume
-```yml
-version: '3'
+Let's start with the postres container that will save all data on the postgres_data volume
 
-services:
-  postgres:
-    container_name: postgres_db
-    image: 'postgres:latest'
-    restart: always
-    volumes:
-      - './postgres_data:/var/lib/postgresql/data'
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: 1234
-      POSTGRES_DB: demo
-    ports:
-      - '5432:5432'
-```
-
-Start the database 
 ```sh
 docker compose up -d
 ```
@@ -43,51 +25,12 @@ $ docker logs 3290f9616b1b
 ## Set the Diesel schema
 First thing, lets create an .env with your postgress data
 ```sh
-echo DATABASE_URL=postgres://root:1234@localhost/demo > .env
+echo DATABASE_URL=postgres://root:1234@localhost/chronos > .env
 ```
 
-Then lets set up diesel. This will create a diesel.toml and migrations folder on the root of the project
-
-```sh
-diesel setup
-```
-
-Once this is done we can create a table running a migration
-```sh
-diesel migration generate articles
-```
-
-###### SQL
-This previous command will create a new migration that contains a down.sql and an up.sql that we will fill with some made up data.
-```sql
-# up.sql
-CREATE TABLE articles (
-    uuid UUID PRIMARY KEY,
-    title VARCHAR NOT NULL,
-    body TEXT NOT NULL,
-    published BOOLEAN NOT NULL DEFAULT 'f'
-);
-```
-```sql
-# down.sql
-DROP TABLE articles
-```
-
-And once this is done we can run the migration!
+Once this is done we can create the migrations running
 ```sh
 diesel migration run
-```
-You'll see that now we have a new file on src called `schema.rs`. Waht his migration command did is create a table for us to interact with rust.
-
-```rust
-table! {
-    articles (uuid) {
-        uuid -> Uuid,
-        title -> Varchar,
-        body -> Text,
-        published -> Bool,
-    }
-}
 ```
 
 ## Check DB
@@ -96,15 +39,15 @@ command line and then enter the psql cli as root with the password provided on t
 
 ```sh
 docker exec -it postgres_db bash
-psql -h postgres_db -d demo -U root ;
+psql -h postgres_db -d chronos -U root ;
 ```
 Once you are inside, you can run the `\l` command and you'll be shown a list of databases
 ```
-demo=# \l
+chronos=# \l
                              List of databases
    Name    | Owner | Encoding |  Collate   |   Ctype    | Access privileges 
 -----------+-------+----------+------------+------------+-------------------
- demo      | root  | UTF8     | en_US.utf8 | en_US.utf8 | 
+ chronos   | root  | UTF8     | en_US.utf8 | en_US.utf8 | 
  postgres  | root  | UTF8     | en_US.utf8 | en_US.utf8 | 
  template0 | root  | UTF8     | en_US.utf8 | en_US.utf8 | =c/root          +
            |       |          |            |            | root=CTc/root
@@ -112,13 +55,16 @@ demo=# \l
            |       |          |            |            | root=CTc/root
 (4 rows)
 ```
-The table we created is the demo, so we'll connect to that db by running `\c demo`, which will allow us to list the relations inside that db with another `\d`.
+The table we created is the chronos, so we'll connect to that db by running `\c chronos`, which will allow us to list the relations inside that db with another `\d`.
 ```
-demo=# \d
-                  List of relations
- Schema |            Name            | Type  | Owner 
---------+----------------------------+-------+-------
- public | __diesel_schema_migrations | table | root
- public | articles                   | table | root
-(2 rows)
+chronos=# \d
+                   List of relations
+ Schema |            Name            |   Type   | Owner 
+--------+----------------------------+----------+-------
+ public | __diesel_schema_migrations | table    | root
+ public | punches                    | table    | root
+ public | punches_id_seq             | sequence | root
+ public | users                      | table    | root
+ public | users_id_seq               | sequence | root
+(5 rows)
 ```

@@ -7,8 +7,8 @@ use crate::models::user::User;
 use crate::schema::punches::dsl::*;
 use crate::utils::{current_time, graphql_translate};
 use diesel::QueryDsl;
-use diesel::{pg::PgConnection, Insertable, RunQueryDsl};
-use juniper::{FieldError, FieldResult, GraphQLInputObject};
+use diesel::{pg::PgConnection, RunQueryDsl};
+use juniper::{FieldError, FieldResult};
 
 // This struct is basically a query manager. All the methods that it
 // provides are static, making it a convenient abstraction for interacting
