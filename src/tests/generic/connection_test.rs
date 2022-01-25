@@ -1,6 +1,7 @@
 #[cfg(test)]
 mod tests {
     use reqwest::{self, StatusCode};
+    use crate::utils::format_error;
 
     #[tokio::main]
     #[test]
@@ -27,10 +28,5 @@ mod tests {
             let expected: StatusCode = reqwest::StatusCode::OK;
         
             assert!(response.status() == expected, "{}", format_error(expected.as_str(), &response.status().as_str()));
-    }
-
-
-    fn format_error(expected: &str, received: &str) -> String {
-        format!("\n\n- Expected: {}\n- Received: {}\n\n", expected, received)
     }
 }

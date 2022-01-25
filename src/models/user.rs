@@ -4,7 +4,7 @@ use crate::schema::users;
 use diesel::Queryable;
 use juniper::{FieldResult, GraphQLInputObject};
 // The core data type undergirding the GraphQL interface
-#[derive(Queryable)]
+#[derive(Queryable, Debug)]
 pub struct User {
     pub id: i32,
     pub name: String,

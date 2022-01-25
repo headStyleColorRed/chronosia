@@ -1,2 +1,2 @@
-pub mod connection_test;
-pub mod user_test;
+pub mod generic;
+pub mod user;
