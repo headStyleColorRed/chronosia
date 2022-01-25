@@ -1,0 +1,47 @@
+input CreatePunchClockInInput {
+  userId: Int!
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): User!
+  deleteUser(input: DeleteUserQuery!): User!
+  clockIn(input: CreatePunchClockInInput!): Punch!
+  clockOut(input: CreatePunchClockOutInput!): Punch!
+}
+
+input FindUserQuery {
+  id: Int!
+}
+
+type Query {
+  allUsers: [User!]!
+  userWithId(input: FindUserQuery!): User!
+}
+
+type Punch {
+  id: Int!
+  userId: Int!
+  entry: String!
+  leave: String
+  status: Int!
+}
+
+input CreateUserInput {
+  name: String!
+}
+
+type User {
+  id: Int!
+  name: String!
+  status: Int!
+  currentPunch: Int
+  history: [Punch!]!
+}
+
+input CreatePunchClockOutInput {
+  userId: Int!
+}
+
+input DeleteUserQuery {
+  id: Int!
+}
