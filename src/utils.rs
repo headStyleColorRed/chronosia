@@ -11,7 +11,3 @@ pub fn graphql_translate<T>(res: Result<T, diesel::result::Error>) -> FieldResul
         Err(e) => FieldResult::Err(FieldError::from(e)),
     }
 }
-
-pub fn format_error(expected: &str, received: &str) -> String {
-    format!("\n\n- Expected: {}\n- Received: {}\n\n", expected, received)
-}

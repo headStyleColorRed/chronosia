@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     use super::super::graphql::queries::UsersQuery;
-    use crate::utils::format_error;
+    use crate::tests::utils::*;
     use cynic::QueryBuilder;
 
     #[test]

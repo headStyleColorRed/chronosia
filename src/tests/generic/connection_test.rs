@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     use reqwest::{self, StatusCode};
-    use crate::utils::format_error;
+    use crate::tests::utils::*;
 
     #[tokio::main]
     #[test]
