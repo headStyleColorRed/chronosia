@@ -1,0 +1,14 @@
+query AllUsersQuery {
+	allUsers {
+        name
+        id
+        currentPunch
+        history {
+            id
+            userId
+            entry
+            leave
+            status
+        }
+  }
+}

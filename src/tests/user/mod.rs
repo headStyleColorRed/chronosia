@@ -1,2 +1,2 @@
-mod graphql;
 mod tests;
+mod models;
