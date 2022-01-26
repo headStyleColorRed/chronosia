@@ -8,7 +8,7 @@ services:
       - chronosia-net
     build: ./
     ports:
-      - "8080:8080"
+      - '8080:8080'
 
   postgres:
     container_name: postgres_db
@@ -27,4 +27,4 @@ services:
 
 networks:
   chronosia-net:
-    name: Chronosianet
+    name: chronosia-net
