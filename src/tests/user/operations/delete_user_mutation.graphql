@@ -1,0 +1,7 @@
+mutation DeleteUserMutation($input: DeleteUserQuery!) {
+  deleteUser(input: $input) {
+    id
+    name
+    status
+  }
+}
