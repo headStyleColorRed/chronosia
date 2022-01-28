@@ -2,7 +2,7 @@
 
 pub mod punch_tests {
     use std::panic;
-    use super::super::super::user::tests::user_tests as UserMethods;
+    use super::super::super::user::user_tests::user_tests as UserMethods;
     use graphql_client::{GraphQLQuery, Response};
     use crate::tests::utils::format_error;
     use graphql_client::Error as GraphQLError;
@@ -86,9 +86,7 @@ pub mod punch_tests {
         Ok(punch)
     }
 
-    #[tokio::main]
-    #[test]
-    async fn punch_flow() {
+    pub async fn punch_flow() {
         let new_user_name = "Michael Scott Cesar Riddle";
 
         // Create new user

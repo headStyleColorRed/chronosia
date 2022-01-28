@@ -1,7 +1,15 @@
 mutation CreateUserMutation($input: CreateUserInput!) {
   createUser(input: $input) {
-    id
     name
+    id
+    currentPunch
     status
+    history {
+      id
+      userId
+      entry
+      leave
+      status
+    }
   }
 }

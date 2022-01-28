@@ -1,6 +1,7 @@
 pub mod generic;
 pub mod user;
 pub mod punch;
+pub mod tests;
 
 pub mod utils {
     #[allow(dead_code)]

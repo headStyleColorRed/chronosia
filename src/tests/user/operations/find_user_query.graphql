@@ -1,5 +1,5 @@
-mutation DeleteUserMutation($input: DeleteUserQuery!) {
-  deleteUser(input: $input) {
+query FindUserQuery($input: FindUserQuery!) {
+  userWithId(input: $input) {
     name
     id
     currentPunch

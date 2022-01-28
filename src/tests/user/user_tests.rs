@@ -24,6 +24,33 @@ pub mod user_tests {
         Ok(response_data.all_users.len() as i32)
     }
 
+    async fn get_user_by_id(id: i64) -> Result<UserData, ()> {
+        use super::super::models::find_user_query::user::{FindUserQuery, find_user_query, find_user_query::Variables};
+        
+        // Input parameters
+        let input = find_user_query::FindUserQuery { id: id };
+        let variables: Variables = Variables { input };
+        
+        // Request
+        let request_body = FindUserQuery::build_query(variables);
+        let client = reqwest::Client::new();
+        let res = client.post("http://localhost:8080/graphql").json(&request_body).send().await.unwrap();
+
+        // Response
+        let response: Response<find_user_query::ResponseData> = res.json().await.unwrap();
+        let response_data = response.data.unwrap();
+        let data_user = response_data.user_with_id;
+
+        // Return
+        let user =  UserData {
+            id: data_user.id,
+            name: data_user.name,
+            status: data_user.status,
+        };
+
+        Ok(user)
+    }
+
 
     pub async fn create_user(name: &str) -> Result<UserData, ()> {
         use super::super::models::create_user_mutation::user::{CreateUserMutation, create_user_mutation, create_user_mutation::Variables};
@@ -80,9 +107,7 @@ pub mod user_tests {
     }
 
 
-    #[tokio::main]
-    #[test]
-    async fn user_flow() {
+    pub async fn user_flow() {
         let new_user_name = "Michael Scott Cesar Riddle";
 
         // Get current users
@@ -101,6 +126,10 @@ pub mod user_tests {
 
         // There should be one more user on the DB
         assert!(original_users_count + 1 == added_users_count, "{}", format_error(&(original_users_count + 1).to_string(), &added_users_count.to_string()));
+
+        // Get single user
+        let user = get_user_by_id(new_user.id).await.unwrap();
+        assert!(user.name == new_user_name, "{}", format_error(new_user_name, &user.name));
 
         // Delete user
         let deleted_user = delete_user(new_user.id).await.unwrap();

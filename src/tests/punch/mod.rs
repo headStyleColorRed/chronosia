@@ -1,2 +1,2 @@
-mod tests;
+pub mod punch_tests;
 mod models;
