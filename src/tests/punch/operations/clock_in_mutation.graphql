@@ -1,0 +1,9 @@
+mutation ClockInMutation($input: CreatePunchClockInInput!) {
+  clockIn(input: $input) {
+    id
+    userId
+    entry
+    leave
+    status
+  }
+}

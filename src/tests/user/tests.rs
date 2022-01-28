@@ -1,14 +1,13 @@
 #[cfg(test)]
 
-
 pub mod user_tests {
     use graphql_client::{GraphQLQuery, Response};
     use crate::tests::utils::format_error;
     
-    struct UserData {
-        id: i64,
-        name: String,
-        status: i64,
+    pub struct UserData {
+        pub id: i64,
+        pub name: String,
+        pub status: i64,
     }
 
     async fn get_all_users() -> Result<i32, ()> {
@@ -26,7 +25,7 @@ pub mod user_tests {
     }
 
 
-    async fn create_user(name: &str) -> Result<UserData, ()> {
+    pub async fn create_user(name: &str) -> Result<UserData, ()> {
         use super::super::models::create_user_mutation::user::{CreateUserMutation, create_user_mutation, create_user_mutation::Variables};
         
         // Input parameters
@@ -53,7 +52,7 @@ pub mod user_tests {
         Ok(user)
     }
 
-    async fn delete_user(id: i64) -> Result<UserData, ()> {
+    pub async fn delete_user(id: i64) -> Result<UserData, ()> {
         use super::super::models::delete_user_mutation::user::{DeleteUserMutation, delete_user_mutation, delete_user_mutation::Variables};
 
         // Input parameters
@@ -84,7 +83,7 @@ pub mod user_tests {
     #[tokio::main]
     #[test]
     async fn user_flow() {
-        let new_user_name = "Michael Scott Carbilias Serpentico";
+        let new_user_name = "Michael Scott Cesar Riddle";
 
         // Get current users
         let original_users_count: i32 = get_all_users().await.unwrap();

@@ -1,0 +1,9 @@
+mutation ClockOutMutation($input: CreatePunchClockOutInput!) {
+  clockOut(input: $input) {
+    id
+    userId
+    entry
+    leave
+    status
+  }
+}

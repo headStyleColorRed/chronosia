@@ -1,2 +1,2 @@
-mod tests;
+pub mod tests;
 mod models;
