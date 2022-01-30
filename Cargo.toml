@@ -17,6 +17,7 @@ chrono = "0.4.19"
 serde = "1.0.135"
 futures = "0.3"
 
+
 [dev-dependencies]
 graphql_client = { version = "0.10.0", features = ["reqwest"] }
 serde = { version = "1.0.67", features = ["derive"] }
