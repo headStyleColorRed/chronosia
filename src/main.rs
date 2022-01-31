@@ -2,7 +2,7 @@
 #[macro_use]
 extern crate diesel;
 
-use actix_web::{web, App, HttpServer, dev::Service};
+use actix_web::{web, App, HttpServer};
 mod context;
 mod db;
 mod endpoints;
@@ -13,8 +13,6 @@ mod rest;
 mod schema;
 mod tests;
 mod utils;
-
-use futures::FutureExt;
 use rest::generic::health;
 
 #[actix_rt::main]
@@ -31,13 +29,6 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(move || {
         App::new()
             .data(pool.clone())
-            .wrap_fn(|req, srv| {
-                println!("Hi from start. You requested: {}", req.path());
-                srv.call(req).map(|res| {
-                    println!("Hi from response");
-                    res
-                })
-            })
             .route("/", web::get().to(health))
             .configure(endpoints::graphql_endpoints)
     })

@@ -2,6 +2,7 @@ use super::context::GraphQLContext;
 use super::db::PostgresPool;
 use crate::graphql::base::create_schema;
 use crate::graphql::base::Schema;
+use crate::rest::bearer::Authorized;
 use actix_web::{web, Error, HttpResponse};
 use juniper::http::playground::playground_source;
 use juniper::http::GraphQLRequest;
@@ -34,6 +35,8 @@ async fn graphql(
     schema: web::Data<Arc<Schema>>,
     // The incoming HTTP request
     data: web::Json<GraphQLRequest>,
+    // Authorization
+    _: Authorized
 ) -> Result<HttpResponse, Error> {
     // Instantiate a context
     let context = GraphQLContext {

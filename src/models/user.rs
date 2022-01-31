@@ -1,10 +1,8 @@
 use super::punch::Punch;
-use crate::{context::GraphQLContext, operations::punches::Punches};
 use crate::schema::users;
-use actix_web::{dev, Error, FromRequest, HttpRequest};
+use crate::{context::GraphQLContext, operations::punches::Punches};
 use diesel::Queryable;
-use juniper::{FieldResult, GraphQLInputObject, FieldError};
-use futures::future::Ready;
+use juniper::{FieldResult, GraphQLInputObject};
 // The core data type undergirding the GraphQL interface
 #[derive(Queryable, Debug)]
 pub struct User {
@@ -32,29 +30,20 @@ impl User {
         Punches::all_punches_for_user(context, self.id)
     }
 }
-// FieldResult::Err(FieldError::from("This user is already clocked in"))
-impl FromRequest for User {
-      type Error = Error;
-      type Future = Ready<Result<Self, Self::Error>>;
-      type Config = ();
-
-      fn from_request(req: &HttpRequest, payload: &mut dev::Payload) -> Self::Future { }
-
-}
 
 // The GraphQL input object for creating TODOs
 #[derive(GraphQLInputObject, Insertable)]
 #[table_name = "users"]
 pub struct CreateUserInput {
-    pub name: String
+    pub name: String,
 }
 
 #[derive(GraphQLInputObject)]
 pub struct FindUserQuery {
-    pub id: i32
+    pub id: i32,
 }
 
 #[derive(GraphQLInputObject)]
 pub struct DeleteUserQuery {
-    pub id: i32
+    pub id: i32,
 }
