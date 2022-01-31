@@ -4,11 +4,16 @@ use actix_web::{Error, FromRequest, HttpRequest};
 use futures::future::Ready;
 use futures_util::future::{err, ok};
 use std::env;
+use serde::{Serialize, Deserialize};
+use jsonwebtoken::{decode, Validation, DecodingKey};
 
-use hmac::{Hmac, Mac};
-use jwt::{VerifyWithKey, SignWithKey};
-use sha2::Sha256;
-use std::collections::BTreeMap;
+
+#[derive(Debug, Serialize, Deserialize)]
+struct Claims {
+    email: String,
+    iat: usize,
+    exp: usize,
+}
 
 pub struct Authorized;
 
@@ -50,38 +55,14 @@ fn is_authorized(req: &HttpRequest) -> bool {
         Err(_) => return false,
     };
 
-    //
-
-    let key: Hmac<Sha256> = Hmac::new_from_slice(b"some-secret").unwrap();
-    let mut claims = BTreeMap::new();
-    claims.insert("email", "rodrigopple@gmail.com");
-    claims.insert("iat", "1643650650");
-    claims.insert("exp", "1643737050");
-    
-    let token_str = claims.sign_with_key(&key).unwrap();
-    println!("Token => {}", token_str);
-    //
-
     // Retrieve secret from environment file
     let secret = match env::var("SECRET") {
         Ok(secret) => secret,
         Err(_) => return false,
     };
 
-    // Turn to bites
-    let byte_secret = secret.as_bytes(); 
-
-    // Create hash-based message authentication code
-    let key: Hmac<Sha256> = match Hmac::new_from_slice(byte_secret) {
-        Ok(key) => key,
-        Err(err) => {
-            dbg!(err);
-            return false
-        },
-    };
-
-    // Validate authorization token
-    let claims: Result<BTreeMap<String, String>, jwt::Error> = bearer_token.verify_with_key(&key);
+    // Validate jwt
+    let claims = decode::<Claims>(&bearer_token, &DecodingKey::from_secret(secret.as_ref()), &Validation::default());
 
     // Return result
     match claims {
