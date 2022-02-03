@@ -104,69 +104,18 @@ export default {
             }
             console.log("Login -> Login Success");
 
-            // Retrieve User
-            console.log("Login -> Retrieving user");
-            let user = await user_services
-                .findUser(userData.username)
-                .catch((err) => {
-                    this.loading = false
-                    return alert(err);
-                });
-            let userExists = user.data.length > 0;
-            console.log("Login -> User retrieved");
-
-            // User doesn't exist
-            if (!userExists) {
-                console.log("Login -> User hasn't been created yet");
-
-                this.$store.commit("setUserLoginData", {
-                    organizationId: null,
-                    authToken: loginResponse.token,
-                    email: userData.username,
-                });
-
-                return this.$router.push("/create_user");
+            let loginData = {
+                email: userData.username,
+                authToken: loginResponse.token,
+                isLogged: true,
             }
 
-            // User exists but has no organization
-            let userHasOrganizations = user.data[0].organizations.length > 0;
-            console.log(
-                `Login -> User has ${
-                    userHasOrganizations ? "" : "no"
-                } organizations.`
-            );
-            if (!userHasOrganizations) {
-                this.$store.commit("setUserLoginData", {
-                    organizationId: null,
-                    authToken: loginResponse.token,
-                    email: userData.username,
-                });
+            // Save login data
+            this.$store.commit("setState", loginData);
 
-                return this.$router.push("/create_organization");
-            }
+            // Move to next route
+            this.$router.push("/");
 
-            // User has single organization
-            if (user.data[0].organizations.length == 1) {
-                console.log(
-                    "Login -> Moving to dashboard for single organization"
-                );
-                return this.logUser({
-                    organizationId: user.data[0].organizations[0].id,
-                    authToken: loginResponse.token,
-                    email: userData.username,
-                });
-            }
-
-            // User has multiple organizations
-            if (user.data[0].organizations.length > 1) {
-                console.log("Login -> Moving to choose organization");
-                this.logUser({
-                    organizationId: null,
-                    authToken: loginResponse.token,
-                    email: userData.username,
-                });
-                return this.$router.push("/create_organization");
-            }
         },
         parseRegisteringData(userData) {
             // Validation
