@@ -6,7 +6,7 @@ mod tests {
     #[tokio::main]
     #[test]
     async fn test_health() {
-        let response = reqwest::get("http://127.0.0.1:8080/")
+        let response = reqwest::get("http://127.0.0.1:7000/")
             .await
             .unwrap()
             .text()
@@ -21,7 +21,7 @@ mod tests {
     #[tokio::main]
     #[test]
     async fn test_playground() {
-        let response = reqwest::get("http://127.0.0.1:8080/graphql")
+        let response = reqwest::get("http://127.0.0.1:7000/graphql")
             .await
             .expect("Error querying playground");
 

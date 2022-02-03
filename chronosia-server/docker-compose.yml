@@ -1,14 +1,14 @@
 version: "3.5"
 
 services:
-  chronosia:
-    container_name: chronosia
-    restart: always
-    networks: 
-      - chronosia-net
-    build: ./
-    ports:
-      - '8080:8080'
+  # chronosia:
+  #   container_name: chronosia
+  #   restart: always
+  #   networks: 
+  #     - chronosia-net
+  #   build: ./
+  #   ports:
+  #     - '7000:7000'
 
   postgres:
     container_name: postgres_db

@@ -15,9 +15,9 @@ npm run serve
 npm run build
 ```
 
-### Run your unit tests
+### Run your end-to-end tests
 ```
-npm run test:unit
+npm run test:e2e
 ```
 
 ### Customize configuration

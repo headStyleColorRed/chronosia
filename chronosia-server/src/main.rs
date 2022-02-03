@@ -25,14 +25,14 @@ async fn main() -> std::io::Result<()> {
     // to make it available to all endpoints, (b) the logger middelware to
     // know that is happening and (b) the configuration function that adds the /graphql logic.
     // TODO: - Add cors
-    println!("Starting server on port 8080");
+    println!("Starting server on port 7000");
     HttpServer::new(move || {
         App::new()
             .data(pool.clone())
             .route("/", web::get().to(health))
             .configure(endpoints::graphql_endpoints)
     })
-    .bind(("0.0.0.0", 8080))?
+    .bind(("0.0.0.0", 7000))?
     .run()
     .await
 }

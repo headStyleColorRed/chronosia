@@ -5,8 +5,10 @@ export default {
         isLogged: false,
     },
     mutations: {
-        setState(state) {
-
+        setState(state, data) {
+            state.email = data.email
+            state.authToken = data.authToken
+            state.isLogged = data.isLogged
         },
         resetAuthState(state) {
             state.authToken = null

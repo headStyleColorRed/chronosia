@@ -34,7 +34,7 @@ pub mod punch_tests {
         // Request
         let request_body = ClockInMutation::build_query(variables);
         let client = reqwest::Client::new();
-        let res = client.post("http://localhost:8080/graphql").json(&request_body).send().await.unwrap();
+        let res = client.post("http://localhost:7000/graphql").json(&request_body).send().await.unwrap();
 
         // Response
         let response: Response<clock_in_mutation::ResponseData> = res.json().await.unwrap();
@@ -65,7 +65,7 @@ pub mod punch_tests {
         // Request
         let request_body = ClockOutMutation::build_query(variables);
         let client = reqwest::Client::new();
-        let res = client.post("http://localhost:8080/graphql").json(&request_body).send().await.unwrap();
+        let res = client.post("http://localhost:7000/graphql").json(&request_body).send().await.unwrap();
 
         // Response
         let response: Response<clock_out_mutation::ResponseData> = res.json().await.unwrap();

@@ -17,7 +17,7 @@ pub mod user_tests {
         let variables: Variables = Variables;
         let request_body = AllUsersQuery::build_query(variables);
         let client = reqwest::Client::new();
-        let res = client.post("http://localhost:8080/graphql").json(&request_body).send().await.unwrap();
+        let res = client.post("http://localhost:7000/graphql").json(&request_body).send().await.unwrap();
         let response: Response<all_users_query::ResponseData> = res.json().await.unwrap();
         let response_data = response.data.unwrap();
         
@@ -34,7 +34,7 @@ pub mod user_tests {
         // Request
         let request_body = FindUserQuery::build_query(variables);
         let client = reqwest::Client::new();
-        let res = client.post("http://localhost:8080/graphql").json(&request_body).send().await.unwrap();
+        let res = client.post("http://localhost:7000/graphql").json(&request_body).send().await.unwrap();
 
         // Response
         let response: Response<find_user_query::ResponseData> = res.json().await.unwrap();
@@ -62,7 +62,7 @@ pub mod user_tests {
         // Request
         let request_body = CreateUserMutation::build_query(variables);
         let client = reqwest::Client::new();
-        let res = client.post("http://localhost:8080/graphql").json(&request_body).send().await.unwrap();
+        let res = client.post("http://localhost:7000/graphql").json(&request_body).send().await.unwrap();
 
         // Response
         let response: Response<create_user_mutation::ResponseData> = res.json().await.unwrap();
@@ -89,7 +89,7 @@ pub mod user_tests {
         // Request
         let request_body = DeleteUserMutation::build_query(variables);
         let client = reqwest::Client::new();
-        let res = client.post("http://localhost:8080/graphql").json(&request_body).send().await.unwrap();
+        let res = client.post("http://localhost:7000/graphql").json(&request_body).send().await.unwrap();
 
         // Response
         let response: Response<delete_user_mutation::ResponseData> = res.json().await.unwrap();

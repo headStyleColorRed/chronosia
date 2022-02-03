@@ -18,7 +18,7 @@ RUN mv docker.env .env
 
 RUN cargo build --release
 
-EXPOSE 8080
+EXPOSE 7000
 
 # Run the binary
 CMD ["./target/release/chronosia"]

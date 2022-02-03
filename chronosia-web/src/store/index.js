@@ -1,7 +1,10 @@
-import { createStore } from 'vuex'
+import Vue from 'vue'
+import Vuex from 'vuex'
 import loginStore from './loginStore'
 
-export default createStore({
+Vue.use(Vuex)
+
+export default new Vuex.Store({
   state: {
   },
   mutations: {
@@ -9,6 +12,5 @@ export default createStore({
   actions: {
   },
   modules: {
-    loginStore,
   }
 })
