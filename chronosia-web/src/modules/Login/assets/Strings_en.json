@@ -1,0 +1,29 @@
+{
+	"screen_login": {
+		"alreadyAMember": "Already a member?",
+		"notAMemberYet": "Not a member yet?",
+		"signIn": "Log in",
+		"signUp": "Sign up",
+		"createAccount": "Create Account",
+		"email": "Email",
+		"password": "Password",
+		"passwordConfirmation": "Confirm password",
+		"moreThanNCharacters": "At least 8 characters",
+		"termsAndConditionsAgree": "I agree to all the statements included in the ",
+		"termsAndConditionsPage": "terms of service",
+		"signInWithGoogle": "Sign in with Google",
+		"signInWithLinkedin": "Sign in with Linkedin"
+	},
+	"screen_registration": {
+		"fillYourInfoHeader": "Hi! Fill your info and start your coding journey!",
+		"username": "Username",
+		"age": "Age",
+		"country": "Country",
+		"city": "City"
+	},
+	"profile_registration": {
+		"aboutYourself": "Tell us a bit more about your knowledge",
+		"shortDescription": "A short description about your expertise",
+		"longDescription": "A longer description so the teams now"
+	}
+}
